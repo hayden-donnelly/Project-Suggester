@@ -7,6 +7,13 @@
     <title>Project Suggester</title>
   </head>
   <body>
-    <h1>Hello World :wave:</h1>
+    <h1>Hello World 👋</h1>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+      $.get("http://localhost:3000/new-project", (data, status) => {
+        console.log(data);
+      });
+    </script>
   </body>
 </html>
