@@ -1,16 +1,9 @@
 const express = require("express");
-const { readFile } = require("fs");
+const { readFile } = require("fs").promises;
 const app = express();
 
-app.get("/", (request, response) => {
-    readFile("./template.html", "utf8", (error, html) => {
-
-        if(error) {
-            response.status(500).send("Couldn't fetch file.");
-        }
-
-        response.send(html);
-    })
+app.get("/", async (request, response) => {
+    response.send(await readFile("./template.html", "utf8"));
 });
 
 app.listen(3000, () => console.log("App available on http://localhost:3000"));
