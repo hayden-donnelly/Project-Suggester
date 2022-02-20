@@ -6,12 +6,6 @@ const app = express();
 
 admin.initializeApp();
 
-const newProject = {
-    "title": "Some Project",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore magni, facilis.",
-    "tags": ["backend", "javascript", "data visualization"],
-}
-
 app.get("/", async (request, response) => {
     response.send(await readFile("./template.html", "utf8"));
 });
