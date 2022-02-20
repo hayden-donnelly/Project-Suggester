@@ -10,16 +10,21 @@
     <h1 id="title">Hello World 👋</h1>
     <p id="description">Description</p>
 
+    <button id="new-project">New Project</button>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
-      $.get(
-        "http://localhost:5000/rising-city-341805/us-central1/webApi/new-project",
-        (data, status) => {
-          console.log(data);
-          document.getElementById("title").innerText = data.title;
-          document.getElementById("description").innerText = data.description;
-        }
-      );
+      btn = document.getElementById("new-project");
+      btn.addEventListener("click", () => {
+        $.get(
+          "http://localhost:5000/rising-city-341805/us-central1/webApi/new-project",
+          (data, status) => {
+            console.log(data);
+            document.getElementById("title").innerText = data.title;
+            document.getElementById("description").innerText = data.description;
+          }
+        );
+      });
     </script>
   </body>
 </html>
