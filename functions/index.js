@@ -19,19 +19,27 @@ app.get("/", async (request, response) => {
 app.get("/new-project", async (request, response) => {
     console.log("NEW PROJECT REQUEST");
 
+    let random = Math.random() * 3;
     const collection = admin.firestore().collection("projects");
-    const query = collection.where("id", "==", 1);
+    // TODO: fix projects.size
+    /*collection.get().then(projects => {
+        random = Math.floor(Math.random() * projects.size);
+    });*/
 
-    query.get().then(projects => {
-        projects.forEach(doc => {
+    const query = collection.where("id", ">=", random).limit(1);
+
+    query.get().then(project => {
+        project.forEach(doc => {
             data = doc.data();
             console.log(data);
+            response.send(data);
         })
     });
+
     //const result = await admin.firestore().collection("projects").where("id", "==", 1).get();
     //console.log(result);
 
-    response.send(newProject);
+    //response.send(newProject);
 });
 
 // Default Express configuration.
