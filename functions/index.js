@@ -1,3 +1,4 @@
+const functions = require("firebase-functions");
 const express = require("express");
 const { readFile } = require("fs").promises;
 const app = express();
