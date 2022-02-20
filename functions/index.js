@@ -18,4 +18,9 @@ app.get("/new-project", async (request, response) => {
     response.send(newProject);
 });
 
-app.listen(3000, () => console.log("App available on http://localhost:3000"));
+// Default Express configuration.
+//app.listen(3000, () => console.log("App available on http://localhost:3000"));
+
+// Firebase Functions configuration.
+const webApi = functions.https.onRequest(app);
+module.exports = { webApi }

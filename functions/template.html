@@ -12,11 +12,14 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
-      $.get("http://localhost:3000/new-project", (data, status) => {
-        console.log(data);
-        document.getElementById("title").innerText = data.title;
-        document.getElementById("description").innerText = data.description;
-      });
+      $.get(
+        "http://localhost:5000/rising-city-341805/us-central1/webApi/new-project",
+        (data, status) => {
+          console.log(data);
+          document.getElementById("title").innerText = data.title;
+          document.getElementById("description").innerText = data.description;
+        }
+      );
     </script>
   </body>
 </html>
