@@ -35,11 +35,6 @@ app.get("/new-project", async (request, response) => {
             response.send(data);
         })
     });
-
-    //const result = await admin.firestore().collection("projects").where("id", "==", 1).get();
-    //console.log(result);
-
-    //response.send(newProject);
 });
 
 // Default Express configuration.
