@@ -25,10 +25,20 @@ app.get("/new-project", async (request, response) => {
     query.get().then(project => {
         project.forEach(doc => {
             data = doc.data();
+            data["documentID"] = doc.id;
             console.log(data);
             response.send(data);
         })
     });
+});
+
+app.post("/like-project", async (request, response) => {
+    const increment = admin.firestore.FieldValue.increment(1);
+
+    const collection = admin.firestore().collection("projects");
+    const project = collection.doc(request.body.documentID);
+
+    project.update({ "likes": increment });
 });
 
 // Default Express configuration.
