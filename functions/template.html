@@ -26,37 +26,20 @@
 
     <h1 id="title">Hello World</h1>
     <p id="description">Description</p>
-    <p>Likes: <div id="likes"></div></p>
-    <button id="like-project">Like Project</button>
     <button id="new-project">New Project</button>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
-      var currentDocumentID = "";
-
       btn = document.getElementById("new-project");
       btn.addEventListener("click", () => {
         $.get(
-          "http://localhost:3000/rising-city-341805/us-central1/webApi/new-project",
+          "http://localhost:5000/rising-city-341805/us-central1/webApi/new-project",
           (data, status) => {
             console.log(data);
             document.getElementById("title").innerText = data.title;
             document.getElementById("description").innerText = data.description;
-            document.getElementById("likes").innerText = data.likes;
-            currentDocumentID = data.documentID;
           }
         );
-      });
-
-      btn2 = document.getElementById("like-project");
-      // Switch to post.
-      btn2.addEventListener("click", () => {
-        $.post(
-          "http://localhost:3000/rising-city-341805/us-central1/webApi/like-project", 
-          {"documentID": currentDocumentID},
-          (data, status) => {
-              //document.getElementById("likes").innerText += 1;
-        })
       });
     </script>
   </body>
