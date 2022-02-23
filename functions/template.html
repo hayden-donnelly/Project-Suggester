@@ -27,36 +27,77 @@
     <h1 id="title">Hello World</h1>
     <p id="description">Description</p>
     <p>Likes: <div id="likes"></div></p>
+    <button id="previous-project">Previous Project</button>
     <button id="like-project">Like Project</button>
     <button id="new-project">New Project</button>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
+      const API = "http://localhost:3000/rising-city-341805/us-central1/webApi/";
+      var projectHistory = [];
+      // ID of the currently displayed project within projectHistory.
+      var projectHistoryID = 0;
       var currentDocumentID = "";
+
+      function updateDocument(data) {
+        document.getElementById("title").innerText = data.title;
+        document.getElementById("description").innerText = data.description;
+        document.getElementById("likes").innerText = data.likes;
+        currentDocumentID = data.documentID;
+      }
 
       btn = document.getElementById("new-project");
       btn.addEventListener("click", () => {
+
+        if(projectHistoryID > 0) {
+          projectHistoryID--;
+          $.get(
+            API + "project-by-id",
+            { "documentID": projectHistory[projectHistoryID] },
+            (data, status) => {
+              console.log(status);
+              updateDocument(data);
+          });
+          return;
+        }
+
         $.get(
-          "http://localhost:3000/rising-city-341805/us-central1/webApi/new-project",
+          API + "new-project",
           (data, status) => {
+            console.log(status);
             console.log(data);
-            document.getElementById("title").innerText = data.title;
-            document.getElementById("description").innerText = data.description;
-            document.getElementById("likes").innerText = data.likes;
-            currentDocumentID = data.documentID;
-          }
-        );
+            updateDocument(data);
+            projectHistory.unshift(currentDocumentID);
+        })
       });
 
       btn2 = document.getElementById("like-project");
-      // Switch to post.
       btn2.addEventListener("click", () => {
         $.post(
-          "http://localhost:3000/rising-city-341805/us-central1/webApi/like-project", 
-          {"documentID": currentDocumentID},
+          API + "like-project", 
+          { "documentID": currentDocumentID },
           (data, status) => {
+            console.log(status);
               //document.getElementById("likes").innerText += 1;
-        })
+        });
+      });
+
+      btn3 = document.getElementById("previous-project");
+      btn3.addEventListener("click", () => {
+
+        if(projectHistoryID + 1 >= projectHistory.length) {
+          console.log("Error: there are no more projecs stored in this app's history.");
+          return;
+        }
+
+        projectHistoryID++;
+        $.get(
+          API + "project-by-id",
+          { "documentID": projectHistory[projectHistoryID] },
+          (data, status) => {
+            console.log(status);
+            updateDocument(data);
+        });
       });
     </script>
   </body>
